@@ -3,6 +3,7 @@ git config --global pager.branch false
 
 alias gitcod='git checkout .'
 
+alias gitkey='eval "$(ssh-agent -s)";ssh-add ~/.ssh/git_rsa'
 #----------------------
 #git
 #----------------------

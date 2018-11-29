@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 #------------------------------------------------------
 #used by cls, shouldn't be called alone.  Mostly just

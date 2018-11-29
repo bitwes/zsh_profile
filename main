@@ -9,7 +9,6 @@ alias fcount='ls -l | grep -v ^l | wc -l'
 alias untarball='tar xvf '
 alias fuser='/sbin/fuser ' #shows users of files, just wanted to remember it.
 
-
 #ls related
 alias la='ls -lah'
 #alias ls='ls -hide='"'"'*~*'"'"' -hide='"'"'*#*'"'"' --color=tty '
@@ -37,6 +36,19 @@ alias llbyext='llext | _ls_by_extension'
 alias lld='ls -ld */'
 alias lldot='l. -lh'
 
+#CD up (copied from gary)
+alias cdu='cd ..'
+alias cdu2='cd ../../'
+alias cdu3='cd ../../../'
+alias cdu4='cd ../../../../'
+alias cdu5='cd ../../../../../'
+alias cdu6='cd ../../../../../../'
+alias cdu7='cd ../../../../../../../'
+alias cdu8='cd ../../../../../../../../'
+alias cdu9='cd ../../../../../../../../../'
+
+alias cd-='cd -'
+alias dirs='dirs -v'
 
 
 #------------------------------------------------------
@@ -57,7 +69,6 @@ grp(){
  grep -ir "$1" ./
 }
 
-
 #------------------------------------------------------
 #Lists files using find's -mtime option.  This allows
 #you to list files by date modified.
@@ -74,23 +85,34 @@ lldays(){
   eval "find ./ -maxdepth 1 -mtime $1 | xargs ls -ldtrh --color=tty"
 }
 
+#------------------------------------------------------
+# ls not ll (see lldays)
+#------------------------------------------------------
 lsdays(){
   eval "find . -maxdepth 1 -mtime $1 | xargs ls $2 -d --color=tty"
 }
 
 
+#------------------------------------------------------
+# I guess this works, who knows.
+#------------------------------------------------------
 linuxversion(){
     uname -mrs
     cat /etc/*-release
 }
 
+#------------------------------------------------------
+# make a dir and cd into it
+#------------------------------------------------------
 mkcd(){
   mkdir -p $1
   cd $1
   pwd
 }
 
+#------------------------------------------------------
 # Set the title of the tab and window in iterm2
+#------------------------------------------------------
 function title {
     echo -ne "\033]0;"$*"\007"
 }

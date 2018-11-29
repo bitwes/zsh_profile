@@ -6,3 +6,5 @@ say_set_name(){
 say_show_names() {
   say -v '?'
 }
+
+alias cpwd='pwd | pbcopy'
