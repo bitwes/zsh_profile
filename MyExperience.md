@@ -5,6 +5,7 @@
   1. can autocomplete with it
   1. shows aliases
   1. shows function definitions
+  1. which found test_psvc when i typed `which psvc` tab tab
 
 # Bad things
 1. oh.my.zsh
@@ -12,3 +13,4 @@
 1. presto
   1. maybe i should be using this instead of oh.my.zsh
 1.  Powerline isn't easy to install.
+w
