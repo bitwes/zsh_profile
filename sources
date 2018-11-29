@@ -1,0 +1,12 @@
+#!/bin/zsh
+dot_it() {
+  if [ -f "$ZSHFILES/$1" ] ; then
+    eval ". $ZSHFILES/$1"
+  fi
+}
+
+dot_it main
+dot_it cls.sh
+dot_it text_format.zsh
+dot_it git_tools.sh
+dot_it mac.zsh

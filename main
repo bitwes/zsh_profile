@@ -1,0 +1,96 @@
+#!/bin/zsh
+PATH=$PATH:$ZSHFILES/bin
+
+#various
+alias dot='. ~/.zshrc'
+alias ec='emacs '
+alias ecbash='emacs $BASHFILES/*'
+alias fcount='ls -l | grep -v ^l | wc -l'
+alias untarball='tar xvf '
+alias fuser='/sbin/fuser ' #shows users of files, just wanted to remember it.
+
+
+#ls related
+alias la='ls -lah'
+#alias ls='ls -hide='"'"'*~*'"'"' -hide='"'"'*#*'"'"' --color=tty '
+#alias ls='ls --color=tty '
+alias ll='ls -l'
+alias lshid='ls *~* *#* -a \.*~*'
+alias lsd='ls -d */'
+alias lsf='find . -maxdepth 1 -type f | xargs ls -d '    #'ls -lh | grep -v ^d'
+alias llf='find . -maxdepth 1 -type f | xargs ls -ldh '
+alias lsl='echo DIR; lld; echo DOT; l. -lh; echo FILES; llf;'
+alias lathr='ls -lathr '
+
+alias lsx='find . -maxdepth 1 -perm /111 | xargs ls -ld --color=tty'
+alias lsxf='find . -maxdepth 1 -perm /111 -type f | xargs ls -ld '
+alias lsxd='find . -maxdepth 1 -perm /111 -type d | xargs ls -ld '
+
+alias lsshared='find . -maxdepth 1 -perm /077 | xargs ls -ld '
+alias lssharedx='find . -maxdepth 1 -perm /011 | xargs ls -ld '
+alias lssharedr='find . -maxdepth 1 -perm /044 | xargs ls -ld '
+alias lssharedw='find . -maxdepth 1 -perm /022 | xargs ls -ld '
+
+alias llext="find . -maxdepth 1 -type f -name \"*.*\" | awk -F. '{print \$NF}' | sort -u"
+alias llbyext='llext | _ls_by_extension'
+
+alias lld='ls -ld */'
+alias lldot='l. -lh'
+
+
+
+#------------------------------------------------------
+#simplifies use of find for most of what you want.
+#pass in the value in "" and it will look for the file
+#from the current directory on down using case insenative
+#search
+#------------------------------------------------------
+fnd(){
+	find ./ -iname "$1"
+}
+
+#------------------------------------------------------
+#simplifies grep.  does a recursive case insesative
+#search from the current directory
+#------------------------------------------------------
+grp(){
+ grep -ir "$1" ./
+}
+
+
+#------------------------------------------------------
+#Lists files using find's -mtime option.  This allows
+#you to list files by date modified.
+#
+#Parameters:
+#  $1  days old
+#      x = changed x days ago
+#     -x = changed between x days ago and today
+#     +x = changed x days ago or later
+#------------------------------------------------------
+lldays(){
+  #-ldtrh list files with details, human readable, reverse
+  #       order by date, do not traverse sub dirs.
+  eval "find ./ -maxdepth 1 -mtime $1 | xargs ls -ldtrh --color=tty"
+}
+
+lsdays(){
+  eval "find . -maxdepth 1 -mtime $1 | xargs ls $2 -d --color=tty"
+}
+
+
+linuxversion(){
+    uname -mrs
+    cat /etc/*-release
+}
+
+mkcd(){
+  mkdir -p $1
+  cd $1
+  pwd
+}
+
+# Set the title of the tab and window in iterm2
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
