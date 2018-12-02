@@ -11,3 +11,5 @@ dot_it text_format.zsh
 dot_it git_tools.sh
 dot_it mac.zsh
 dot_it java_tools.zsh
+
+dot_it post_local
