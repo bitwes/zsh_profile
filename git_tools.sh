@@ -75,5 +75,5 @@ function master_diff(){
 
 }
 
-#GIT_EXTERNAL_DIFF=$BASHFILES/bin/git_external_diff
-#export GIT_EXTERNAL_DIFF
+GIT_EXTERNAL_DIFF=$ZSHFILES/bin/git_external_diff
+export GIT_EXTERNAL_DIFF
