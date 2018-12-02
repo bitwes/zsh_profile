@@ -1,10 +1,7 @@
 #!/bin/zsh
-
-export GAME='/Users/butchwesley/development/godot/comedyTheGame/godot30_conversion/comedy_godot30/game'
-export GODOT_USER_DIR="/Users/butchwesley/Library/Application Support/Godot/app_userdata/"
 export GODOT='/Applications/Godot_3_0.app/Contents/MacOS/Godot'
 
-alias godot='/Applications/Godot_3_0.app/Contents/MacOS/Godot'
+alias godot='eval $GODOT'
 alias godot31='/Applications/Godot_3_1.app/Contents/MacOS/Godot'
 alias ngodot='open -n $GODOT'
 alias godot_loc="find . -name '*.gd' | xargs wc -l"
@@ -12,14 +9,15 @@ alias godot_loc="find . -name '*.gd' | xargs wc -l"
 # $1 = the name of the script
 # $2 = pattern for functions (optional)
 function list_functions(){
-	if [[ "$2" == "" ]]; then
-		find ./ -name $1 -exec cat {} \; |  grep -n 'func '
-	else
-		find ./ -name $1 -exec cat {} \; |  grep -n 'func ' | grep $2
+	local cmd="find ./ -name $1 -exec cat {} \; |  grep -n 'func '"
+
+	if [[ "$2" ]]; then
+		cmd="$cmd | grep $2"
 	fi
+	eval $cmd
 }
 
-godot_accessor() {
+function godot_accessor() {
 	name=${1#"_"}
 	tab=$'\t'
 
@@ -35,8 +33,7 @@ EOM
 }
 
 
-
-gut(){
+function gut(){
   local script=''
   if [[ $1 ]]; then
     script=" -gselect=$1 "
@@ -51,13 +48,15 @@ gut(){
     test=""
   fi
 
-  local options="--debug-collisions --path $PWD -d -s addons/gut/gut_cmdln.gd -gdir=res://test/unit,res://test/integration -glog=1 -gexit $script $test $3 ${@:3}"
-  echo $options
- 	#godot $options
-  eval "$GODOT $options"
+	local rest_of_args="$3 ${@:3}"
+  local options="--debug-collisions --path $PWD -d -s addons/gut/gut_cmdln.gd $script $test $rest_of_args"
+
+	eval "$GODOT $options"
 }
 
-
+# ------------------------
+# a bunch of old aliases that I'm not ready to get rid of yet.
+# ------------------------
 # export GAME='/Users/butchwesley/development/godot/comedyTheGame/godotcomedygame/game'
 # export GAME_UNIT_TESTS='poopGame/unit_tests/unit_tests.scn'
 #alias godot='open -n /Applications/Godot.app --args '

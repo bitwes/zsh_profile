@@ -13,4 +13,4 @@
 1. presto
   1. maybe i should be using this instead of oh.my.zsh
 1.  Powerline isn't easy to install.
-w
+1.  Had some problems getting my godot tools to run.  Had to use `eval` where I didn't used to.  I think it makes a little more sense this way but it took awhile to get through.
