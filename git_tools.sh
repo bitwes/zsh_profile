@@ -57,7 +57,6 @@ function upstream_to_origin(){
   echo `git remote -v`
 }
 
-
 function master_diff(){
   local file=''
 
@@ -75,7 +74,6 @@ function master_diff(){
   fi
 
 }
-
 
 #GIT_EXTERNAL_DIFF=$BASHFILES/bin/git_external_diff
 #export GIT_EXTERNAL_DIFF

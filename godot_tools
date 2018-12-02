@@ -6,17 +6,29 @@ alias godot31='/Applications/Godot_3_1.app/Contents/MacOS/Godot'
 alias ngodot='open -n $GODOT'
 alias godot_loc="find . -name '*.gd' | xargs wc -l"
 
-# $1 = the name of the script
-# $2 = pattern for functions (optional)
+# ------------------------------------------------------------------------------
+# Lists all the functions in a gd script file.  It searches from the current
+# directory down for any files named $1.  It can optionally filter on a method
+# name from $2.
+#
+# Parameters
+# -----------
+# $1:  the name of the script
+# $2:  (optional) pattern for functions
+# ------------------------------------------------------------------------------
 function list_functions(){
 	local cmd="find ./ -name $1 -exec cat {} \; |  grep -n 'func '"
 
-	if [[ "$2" ]]; then
+	if [[ -n $2 ]]; then
 		cmd="$cmd | grep $2"
 	fi
 	eval $cmd
 }
 
+# ------------------------------------------------------------------------------
+# print out accessors for the passed in property.  It also copies them to the
+# clipboard.
+# ------------------------------------------------------------------------------
 function godot_accessor() {
 	name=${1#"_"}
 	tab=$'\t'
@@ -32,7 +44,20 @@ EOM
 	echo "$OUTPUT" | pbcopy
 }
 
-
+# ------------------------------------------------------------------------------
+# Run Gut.  This only works from the root directory of your game.
+#
+# Parameters
+# ----------
+# $1: (optional) specific script name (turns it into a -gselect gut option).
+# $2: (optional) a string to filter test names with (turns it
+#     into a -gunit_test_name gut option).
+# $n: any options after the 2nd are sent to gut as is.  These could be godot
+#     or gut options.
+#
+# If you want to specify options w/o specifying a script or test name you can
+# pass '' for $1 and $2.  e.g. gut '' '' "-glog=99"
+# ------------------------------------------------------------------------------
 function gut(){
   local script=''
   if [[ $1 ]]; then
@@ -48,14 +73,14 @@ function gut(){
     test=""
   fi
 
-	local rest_of_args="$3 ${@:3}"
+	local rest_of_args="$3 ${@:3}" # this is a bit of magic that I don't remember
   local options="--debug-collisions --path $PWD -d -s addons/gut/gut_cmdln.gd $script $test $rest_of_args"
 
 	eval "$GODOT $options"
 }
 
 # ------------------------
-# a bunch of old aliases that I'm not ready to get rid of yet.
+# a bunch of old aliases and exports that I'm not ready to get rid of yet.
 # ------------------------
 # export GAME='/Users/butchwesley/development/godot/comedyTheGame/godotcomedygame/game'
 # export GAME_UNIT_TESTS='poopGame/unit_tests/unit_tests.scn'
