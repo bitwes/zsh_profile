@@ -1,6 +1,9 @@
 #!/bin/zsh
-PATH=$PATH:$ZSHFILES/bin
+PATH=$PATH:$ZSHFILES/bin:/usr/local/bin
+export EDITOR=emacs
 
+alias gobash='bash -l'
+alias azsh="atom $ZSHFILES"
 #various
 alias dot='. ~/.zshrc'
 alias ec='emacs '
@@ -116,3 +119,6 @@ mkcd(){
 function title {
     echo -ne "\033]0;"$*"\007"
 }
+
+
+alias java_loc="find . -name '*.java' | xargs wc -l"
