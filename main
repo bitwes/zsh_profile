@@ -1,6 +1,6 @@
 #!/bin/zsh
 PATH=$PATH:$ZSHFILES/bin
-
+export EDITOR=emacs
 #various
 alias dot='. ~/.zshrc'
 alias ec='emacs '
@@ -49,6 +49,8 @@ alias cdu9='cd ../../../../../../../../../'
 
 alias cd-='cd -'
 alias dirs='dirs -v'
+
+alias azsh='atom $ZSHFILES'
 
 
 #------------------------------------------------------

@@ -7,4 +7,4 @@ say_show_names() {
   say -v '?'
 }
 
-alias cpwd='pwd | pbcopy'
+alias cpwd='pwd | pbcopy;pwd'
