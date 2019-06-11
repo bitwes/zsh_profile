@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+def parse_time(time)
+  parts = time.split(":")
+
+  hour = parts[0].to_i * 60 * 60 * 1000
+  minute = parts[1].to_i * 60 * 1000
+  second = parts[2].to_i * 1000
+
+  total = hour + minute + second
+end
+
+def parse_mili(m)
+  secs, milisecs = m.divmod(1000) # divmod returns [quotient, modulus]
+  mins, secs = secs.divmod(60)
+  hours, mins = mins.divmod(60)
+
+  [hours,mins,secs].map { |e| e.to_s.rjust(2,'0') }.join ':'
+end
+
+def main
+  input = ARGV[0]
+  if(input.include? ":")
+    puts parse_time(input)
+  else
+    puts parse_mili(input.to_i)
+  end
+end
+
+main

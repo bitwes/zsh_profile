@@ -20,6 +20,12 @@ echo "Status"
 echo "-------";
 git status'
 
+func branch_file(){
+  local branch_name=$1
+  local file_name=$2
+
+  eval "git show ${branch_name}:${file_name} > ${file_name}"
+}
 
 # Opens the github page for the current git repository in your browser
 # git@github.com:jasonneylon/dotfiles.git
@@ -30,7 +36,7 @@ function gh() {
   if [[ "$giturl" == "" ]]
     then
      echo "Not a git repository or no remote.origin.url set"
-     exit 1;
+     return 1;
   fi
 
   giturl=${giturl/git\@github\.com\:/https://github.com/}
