@@ -1,10 +1,23 @@
 #!/bin/zsh
-export GODOT='/Applications/Godot_3_0.app/Contents/MacOS/Godot'
+# ------------------------------------------------------------------------------
+# /Users/butchwesley/Library/Application Support/Godot/editor_settings-3.tres
+#		lines that start with "projects/::" are the lines that define what shows
+#   up when you launch gut.
+# ------------------------------------------------------------------------------
+
+export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
+#export GODOT='/Applications/Godot_3.1_rc1.app/Contents/MacOS/Godot'
 
 alias godot='eval $GODOT'
 alias godot31='/Applications/Godot_3_1.app/Contents/MacOS/Godot'
 alias ngodot='open -n $GODOT'
 alias godot_loc="find . -name '*.gd' | xargs wc -l"
+alias godot_here='godot -e --path $PWD' # hijacks the prompt with godot output.
+alias gdscript='godot --path $PWD -s '
+
+function switch_to_godot_3_1_alpha2(){
+	export GODOT='/Applications/Godot_3_1_alpha2.app/Contents/MacOS/Godot'
+}
 
 # ------------------------------------------------------------------------------
 # Lists all the functions in a gd script file.  It searches from the current
@@ -82,8 +95,6 @@ function gut(){
 # ------------------------
 # a bunch of old aliases and exports that I'm not ready to get rid of yet.
 # ------------------------
-# export GAME='/Users/butchwesley/development/godot/comedyTheGame/godotcomedygame/game'
-# export GAME_UNIT_TESTS='poopGame/unit_tests/unit_tests.scn'
 #alias godot='open -n /Applications/Godot.app --args '
 #alias gut="godot -path $PWD -d -s test/gut/gut_cmdln.gd -gdir=res://test/unit -gexit -gignore_pause"
 #alias comgut="godot -path $PWD -d -s res://bitwes_tools/scripts/gut_cmdln.gd -gutloc=res://bitwes_tools/scripts/gut.gd -gdir=res://poopGame/test/unit,res://poopGame/test/integration -gignore_pause -gexit"

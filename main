@@ -53,6 +53,8 @@ alias cdu9='cd ../../../../../../../../../'
 alias cd-='cd -'
 alias dirs='dirs -v'
 
+alias azsh='atom $ZSHFILES'
+
 
 #------------------------------------------------------
 #simplifies use of find for most of what you want.
