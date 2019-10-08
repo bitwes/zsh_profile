@@ -17,6 +17,6 @@ function mvntest(){
 # }
 
 function idea_here(){
-  idea $PWD 2&>1 &
+  idea $PWD 2>&1 &
   disown
 }
