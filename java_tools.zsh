@@ -20,3 +20,6 @@ function idea_here(){
   idea $PWD 2&>1 &
   disown
 }
+
+
+alias java_loc="find . -name '*.java' | xargs wc -l"

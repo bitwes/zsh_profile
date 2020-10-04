@@ -4,21 +4,35 @@
 #		lines that start with "projects/::" are the lines that define what shows
 #   up when you launch gut.
 # ------------------------------------------------------------------------------
-
 export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
-#export GODOT='/Applications/Godot_3.1_rc1.app/Contents/MacOS/Godot'
 
 alias godot='eval $GODOT'
-alias godot31='/Applications/Godot_3_1.app/Contents/MacOS/Godot'
 alias ngodot='open -n $GODOT'
 alias godot_loc="find . -name '*.gd' | xargs wc -l"
 alias godot_here='godot -e --path $PWD' # hijacks the prompt with godot output.
 alias gdscript='godot --path $PWD -s '
+alias cpgut_here='cp -r $GUT/addons/gut/* ./addons/gut/'
 
-function switch_to_godot_3_1_alpha2(){
-	export GODOT='/Applications/Godot_3_1_alpha2.app/Contents/MacOS/Godot'
+alias adb='/Users/butchwesley/Library/Android/sdk/platform-tools/adb'
+func connect_pixel(){
+  adb devices
+  #adb tcpip 5555
+  adb connect 192.168.1.115
 }
 
+alias disconnect_pixel='adb usb'
+
+func switch_to_godot_323(){
+    export GODOT='/Applications/Godot_3.2.3.app/Contents/MacOS/Godot'
+    godot --version
+    echo $GODOT
+}
+
+function switch_to_godot_default(){
+    export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
+    godot --version
+    echo $GODOT
+}
 # ------------------------------------------------------------------------------
 # Lists all the functions in a gd script file.  It searches from the current
 # directory down for any files named $1.  It can optionally filter on a method
@@ -31,6 +45,24 @@ function switch_to_godot_3_1_alpha2(){
 # ------------------------------------------------------------------------------
 function list_functions(){
 	local cmd="find ./ -name $1 -exec cat {} \; |  grep -n 'func '"
+
+	if [[ -n $2 ]]; then
+		cmd="$cmd | grep $2"
+	fi
+	eval $cmd
+}
+
+# ------------------------------------------------------------------------------
+# Lists all the classes in a gd script file.  This searches the same way that
+# list_functions does.
+#
+# Parameters
+# -----------
+# $1:  the name of the script
+# $2:  (optional) pattern for functions
+# ------------------------------------------------------------------------------
+function list_classes(){
+	local cmd="find ./ -name $1 -exec cat {} \; |  grep -n 'class '"
 
 	if [[ -n $2 ]]; then
 		cmd="$cmd | grep $2"
@@ -88,6 +120,7 @@ function gut(){
 
 	local rest_of_args="$3 ${@:3}" # this is a bit of magic that I don't remember
   local options="--debug-collisions --path $PWD -d -s addons/gut/gut_cmdln.gd $script $test $rest_of_args"
+	#local options="--path $PWD -s addons/gut/gut_cmdln.gd $script $test $rest_of_args"
 
 	eval "$GODOT $options"
 }

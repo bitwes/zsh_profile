@@ -2,7 +2,7 @@
 git config --global pager.branch false
 
 alias gitcod='git checkout .'
-
+alias gpo='git push origin HEAD'
 alias gitkey='eval "$(ssh-agent -s)";ssh-add ~/.ssh/git_rsa'
 #----------------------
 #git

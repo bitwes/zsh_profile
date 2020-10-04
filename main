@@ -54,31 +54,33 @@ alias cd-='cd -'
 alias dirs='dirs -v'
 
 alias azsh='atom $ZSHFILES'
-
+alias dirsize='du -hd 1 | sort -rh' # 'du -hcd 1'
 
 #------------------------------------------------------
-#simplifies use of find for most of what you want.
-#pass in the value in "" and it will look for the file
-#from the current directory on down using case insenative
-#search
+# simplifies use of find for most of what you want.
+# pass in the value in "" and it will look for the file
+# from the current directory on down using case insenative
+# search
 #------------------------------------------------------
 fnd(){
 	find ./ -iname "$1"
 }
 
+
 #------------------------------------------------------
-#simplifies grep.  does a recursive case insesative
-#search from the current directory
+# simplifies grep.  does a recursive case insesative
+# search from the current directory
 #------------------------------------------------------
 grp(){
  grep -ir "$1" ./
 }
 
+
 #------------------------------------------------------
-#Lists files using find's -mtime option.  This allows
-#you to list files by date modified.
+# Lists files using find's -mtime option.  This allows
+# you to list files by date modified.
 #
-#Parameters:
+# Parameters:
 #  $1  days old
 #      x = changed x days ago
 #     -x = changed between x days ago and today
@@ -89,6 +91,7 @@ lldays(){
   #       order by date, do not traverse sub dirs.
   eval "find ./ -maxdepth 1 -mtime $1 | xargs ls -ldtrh --color=tty"
 }
+
 
 #------------------------------------------------------
 # ls not ll (see lldays)
@@ -106,6 +109,7 @@ linuxversion(){
     cat /etc/*-release
 }
 
+
 #------------------------------------------------------
 # make a dir and cd into it
 #------------------------------------------------------
@@ -115,6 +119,7 @@ mkcd(){
   pwd
 }
 
+
 #------------------------------------------------------
 # Set the title of the tab and window in iterm2
 #------------------------------------------------------
@@ -123,4 +128,27 @@ function title {
 }
 
 
-alias java_loc="find . -name '*.java' | xargs wc -l"
+#------------------------------------------------------
+# Kill the first backgrounded process.  Does  nothing if there are multiple.
+# unless you specify the job number as the only optional parameter.
+# Created b/c Godot quit responding to  ctrl+c so now when it hangs you have
+# to use ctrl+z and this method.
+#------------------------------------------------------
+function kil {
+	local line_count=`jobs | wc -l | tr -d '[:space:]'`
+	local jobs_text=`jobs`
+	local job_num=${jobs_text:1:1}
+
+	if [[ -n  $1 ]]; then
+		job_num=$1
+		eval "kill -9 %${job_num}"
+	elif [ $line_count -eq "1" ];then
+		echo "Killing ${job_num}."
+		eval "kill -9 %${job_num}"
+	elif [ $line_count -eq "0" ];then
+		echo "No jobs, nothing to kil."
+	else
+		echo "Too many jobs, not sure which to kil."
+		echo $jobs_text
+	fi
+}

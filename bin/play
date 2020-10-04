@@ -49,6 +49,7 @@ rescue OptionParser::MissingArgument
   raise
 end
 
+
 def get_input
   begin
     system("stty raw -echo")
@@ -58,6 +59,7 @@ def get_input
   end
   str.chr
 end
+
 
 def stop
   if($last_pid != nil)
@@ -77,20 +79,28 @@ def stop
   paint
 end
 
+
 def play_current
+  filename = $files[$index]
   stop
   $playing_index = $index
-  $last_pid = spawn("afplay \"#{$files[$index]}\"")
+  if(File.extname(filename) != '.ogg')
+    $last_pid = spawn("afplay \"#{filename}\"")
+  else
+    $last_pid = spawn("/Applications/VLC.app/Contents/MacOS/VLC \"#{filename}\"")
+  end
   # detach the process so we can keep cycling through songs and getting input.
   # the stop method will try to kill the process if it still exists.
   Process.detach($last_pid)
   paint
 end
 
+
 def print_controls
   puts "f-forward  b-back  s-stop  p-play  q-quit"
   puts "-----------------------------------------"
 end
+
 
 def clear_screen
   # 4 for current line, now playihng and controls
@@ -103,6 +113,7 @@ def clear_screen
   # move cursor back to top
   print $cursor.up(4 + $options[:show])
 end
+
 
 def print_file_list
   min = $index - ($options[:show] / 2).to_i
@@ -132,6 +143,7 @@ def print_file_list
   end
 end
 
+
 def paint
   playing = ''
   if($playing_index != nil)
@@ -149,6 +161,7 @@ def paint
   print_file_list
 end
 
+
 # next is a keyword so named it nextf
 def nextf
   $index += 1
@@ -157,6 +170,7 @@ def nextf
   end
   paint
 end
+
 
 def previous
   $index -= 1
@@ -186,11 +200,15 @@ def process_input
   stop
 end
 
+
 def populate_files
   $files = Dir.entries('./')
   $files.delete('.')
   $files.delete('..')
+  $files.delete('.DS_Store')
+  $files = $files.reject{|e| e.end_with?('.import')}
 end
+
 
 def main
   parse_options
