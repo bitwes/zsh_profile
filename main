@@ -1,5 +1,6 @@
 #!/bin/zsh
-PATH=$PATH:$ZSHFILES/bin:/usr/local/bin
+PATH=$PATH:$ZSHFILES/bin:/usr/local/bin:/usr/local/go/bin/:/Users/212551038/go/bin
+
 export EDITOR=emacs
 
 alias gobash='bash -l'

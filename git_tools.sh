@@ -20,17 +20,33 @@ echo "Status"
 echo "-------";
 git status'
 
+func branch_file(){
+  local branch_name=$1
+  local file_name=$2
+
+  eval "git show ${branch_name}:${file_name} > ${file_name}"
+}
+
+function _gh_wiki_url(){
+  # https://github.build.ge.com/PaaSport/pa-searchldr/wiki
+  # https://github.build.ge.com//PaaSport/pa-searchldr.wiki/tree/master
+}
 
 # Opens the github page for the current git repository in your browser
 # git@github.com:jasonneylon/dotfiles.git
 # https://github.com/jasonneylon/dotfiles/
 function gh() {
-  giturl=$(git config --get remote.origin.url)
+  local remote='origin'
+  if [ $1 ]; then
+    remote=$1
+  fi
+
+  giturl=$(git config --get remote.$remote.url)
   echo $giturl
   if [[ "$giturl" == "" ]]
     then
      echo "Not a git repository or no remote.origin.url set"
-     exit 1;
+     return 1;
   fi
 
   giturl=${giturl/git\@github\.com\:/https://github.com/}
