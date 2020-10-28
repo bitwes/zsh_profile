@@ -22,17 +22,29 @@ func connect_pixel(){
 
 alias disconnect_pixel='adb usb'
 
-func switch_to_godot_323(){
-    export GODOT='/Applications/Godot_3.2.3.app/Contents/MacOS/Godot'
-    godot --version
-    echo $GODOT
+function _swith_to_godot_version(){
+  app=$1
+  export GODOT="/Applications/${app}/Contents/MacOS/Godot"
+  godot --version
+  echo $GODOT
+}
+
+func switch_to_godot_322(){
+  _swith_to_godot_version "Godot_3.2.2.app"
+}
+
+func switch_to_godot_32(){
+  _swith_to_godot_version "Godot_3.2.app"
+}
+
+func switch_to_godot_324_beta(){
+  _swith_to_godot_version "Godot_3.2.4_beta.app"
 }
 
 function switch_to_godot_default(){
-    export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
-    godot --version
-    echo $GODOT
+  _swith_to_godot_version "Godot.app"
 }
+
 # ------------------------------------------------------------------------------
 # Lists all the functions in a gd script file.  It searches from the current
 # directory down for any files named $1.  It can optionally filter on a method
