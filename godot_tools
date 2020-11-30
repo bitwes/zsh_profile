@@ -17,7 +17,7 @@ alias godot_loc="find . -name '*.gd' | xargs wc -l"
 alias adb='/Users/butchwesley/Library/Android/sdk/platform-tools/adb'
 func connect_pixel(){
   adb devices
-  #adb tcpip 5555
+  #adb tcpip 5555 (adb -s FA7B41A00312 tcpip 5555)
   adb connect 192.168.1.115
 }
 
@@ -39,7 +39,7 @@ func switch_to_godot_32(){
 }
 
 func switch_to_godot_324_beta(){
-  _swith_to_godot_version "Godot_3.2.4_beta.app"
+  _swith_to_godot_version "Godot_3.2.4_beta_2.app"
 }
 
 function switch_to_godot_default(){
