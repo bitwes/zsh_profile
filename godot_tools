@@ -8,10 +8,11 @@ export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
 
 alias godot='eval $GODOT'
 alias ngodot='open -n $GODOT'
-alias godot_loc="find . -name '*.gd' | xargs wc -l"
 alias godot_here='godot -e --path $PWD' # hijacks the prompt with godot output.
 alias gdscript='godot --path $PWD -s '
 alias cpgut_here='cp -r $GUT/addons/gut/* ./addons/gut/'
+
+alias godot_loc="find . -name '*.gd' | xargs wc -l"
 
 alias adb='/Users/butchwesley/Library/Android/sdk/platform-tools/adb'
 func connect_pixel(){
