@@ -8,3 +8,4 @@ say_show_names() {
 }
 
 alias cpwd='pwd | pbcopy;pwd'
+export IOS_SIMULATORS="/Users/butchwesley/Library/Developer/CoreSimulator/Devices/"

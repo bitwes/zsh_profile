@@ -60,6 +60,19 @@ function gh() {
   `open $giturl`
 }
 
+function gh_new_issue(){
+  giturl=$(git config --get remote.origin.url)
+  giturl=${giturl/\.git/\/issues\/new/}
+  `open $giturl`
+}
+
+function gh_issues(){
+  giturl=$(git config --get remote.origin.url)
+  giturl=${giturl/\.git/\/issues/}
+  `open $giturl`
+
+}
+
 function origin_to_upstream(){
   `git remote remove upstream`
   `git remote rename origin upstream`
