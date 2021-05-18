@@ -10,7 +10,6 @@ alias godot_here='godot -e --path $PWD' # hijacks the prompt with godot output.
 alias gdscript='godot --path $PWD -s '
 alias godot_loc="find . -name '*.gd' | xargs wc -l"
 
-<<<<<<< HEAD
 alias adb='/Users/butchwesley/Library/Android/sdk/platform-tools/adb'
 func connect_pixel(){
   adb devices
@@ -43,8 +42,6 @@ function switch_to_godot_default(){
   _swith_to_godot_version "Godot.app"
 }
 
-=======
->>>>>>> e5db4d7d133aa1c49cd4f954924577cf5408efa0
 # ------------------------------------------------------------------------------
 # Lists all the functions in a gd script file.  It searches from the current
 # directory down for any files named $1.  It can optionally filter on a method
