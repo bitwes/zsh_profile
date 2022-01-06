@@ -148,8 +148,21 @@ function kil {
 		eval "kill -9 %${job_num}"
 	elif [ $line_count -eq "0" ];then
 		echo "No jobs, nothing to kil."
-	else
+	else 
 		echo "Too many jobs, not sure which to kil."
 		echo $jobs_text
 	fi
+}
+
+function confirm {
+	local msg=$1
+	local choice='poop'
+
+	while [ "${choice}" != "y" ] && [ "${choice}" != "n" ];
+	do
+		echo "${msg} (y/n)"
+		read choice
+	done
+
+	echo "${choice}"
 }

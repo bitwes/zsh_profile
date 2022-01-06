@@ -26,20 +26,16 @@ function _swith_to_godot_version(){
   echo $GODOT
 }
 
-function switch_to_godot_324_rc1(){
-  _swith_to_godot_version "Godot_3.2.4_rc1.app"
-}
-
-function switch_to_godot_324_rc3(){
-  _swith_to_godot_version "Godot_3.2.4_rc3.app"
-}
-
-function switch_to_godot_324_rc5(){
-  _swith_to_godot_version "Godot_3.2.4_rc5.app"
-}
-
 function switch_to_godot_default(){
   _swith_to_godot_version "Godot.app"
+}
+
+function switch_to_godot_323(){
+  _swith_to_godot_version "Godot_3.2.3.app"
+}
+
+function switch_to_godot_332(){
+  _swith_to_godot_version "Godot_3.3.2.app"
 }
 
 # ------------------------------------------------------------------------------

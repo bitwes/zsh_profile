@@ -32,20 +32,5 @@ function _swith_to_godot_version(){
   echo $GODOT
 }
 
-func switch_to_godot_322(){
-  _swith_to_godot_version "Godot_3.2.2.app"
-}
-
-func switch_to_godot_32(){
-  _swith_to_godot_version "Godot_3.2.app"
-}
-
-func switch_to_godot_324_beta(){
-  _swith_to_godot_version "Godot_3.2.4_beta_2.app"
-}
-
-function switch_to_godot_default(){
-  _swith_to_godot_version "Godot.app"
-}
 
 dot_it godot_tools
