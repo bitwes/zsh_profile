@@ -8,6 +8,7 @@ export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
 
 alias ngodot='open -n $GODOT'
 alias cpgut_here='cp -r $GUT/addons/gut/* ./addons/gut/'
+alias cpbitools_here='cp -r $BITOOLS/addons/bitools/* ./addons/bitools/'
 
 
 # ------------------------------------------------------------------------------
