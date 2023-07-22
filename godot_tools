@@ -16,6 +16,8 @@ func connect_pixel(){
   #adb tcpip 5555 (adb -s FA7B41A00312 tcpip 5555)
   adb connect 192.168.1.115
 }
+
+
 alias pixel_use_tcpip='adb tcpip 5555'
 alias disconnect_pixel='adb usb'
 
@@ -26,16 +28,24 @@ function _swith_to_godot_version(){
   echo $GODOT
 }
 
+
 function switch_to_godot_default(){
-  _swith_to_godot_version "Godot.app"
+  switch_to_godot_4
 }
 
-function switch_to_godot_343(){
-  _swith_to_godot_version "Godot_3.4.3.app"
+
+function switch_to_godot_3(){
+  _swith_to_godot_version "Godot_3.5.2.app"
 }
+
 
 function switch_to_godot_4(){
-  _swith_to_godot_version "Godot_4.0_b10.app"
+  _swith_to_godot_version "Godot_4.1.1.app"
+}
+
+
+function switch_to_godot_411(){
+  _swith_to_godot_version "Godot_4.1.app"
 }
 
 # ------------------------------------------------------------------------------
@@ -129,6 +139,9 @@ function gut(){
 
 	eval "$GODOT $options"
 }
+
+alias gut_7_wiki='open ~/development/bitwes.github.io/GutWiki/Godot3/index.html'
+alias gut_9_wiki='open ~/development/bitwes.github.io/GutWiki/Godot4/index.html'
 
 # ------------------------
 # a bunch of old aliases and exports that I'm not ready to get rid of yet.

@@ -180,7 +180,7 @@ def previous
   paint
 end
 
-
+# This is the main loop
 def process_input
   i = get_input.downcase
 

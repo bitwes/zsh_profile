@@ -42,6 +42,10 @@ end
 def docker_ls()
     lines = _docker_container_list()
     puts "    " + lines[0]
+    if(lines.length == 1)
+        puts "    " + "No running containers"
+    end
+
     for i in 1..(lines.length() -1)
         puts "#{i}.  #{lines[i]}"
     end
@@ -53,7 +57,7 @@ def docker_sh(which)
     if(cont != nil)
         _use_container(cont[:id])
         puts "login #{cont[:id]} #{cont[:name]}"
-        cmd = "docker exec -it $CONTAINER /bin/bash"
+        cmd = "docker exec -it #{cont[:id]} /bin/bash"
         exec(cmd)
     else
         puts "ERROR:  Invalid index #{which}\n"
