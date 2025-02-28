@@ -11,7 +11,7 @@ export GODOT_EDITOR_DIR=~/Library/ApplicatioN\ Support/Godot/
 alias ngodot='open -n $GODOT'
 alias cpgut_here='cp -r $GUT/addons/gut/* ./addons/gut/'
 alias cpbitools_here='cp -r $BITOOLS/addons/bitools/* ./addons/bitools/'
-
+alias gut_output_tests='gdscript addons/gut/gut_cmdln.gd -gconfig= -gdir test/output_tests -gexit'
 
 # ------------------------------------------------------------------------------
 # Pixel stuff
@@ -36,4 +36,32 @@ function _swith_to_godot_version(){
 }
 
 
+function extract_godot_app_from_dmg(){
+  dmg=$1
+  hdiutil attach $dmg
+  filename=$(basename -- "$dmg")
+  filename="${filename%.*}"
+  app_path="/Volumes/$filename/$filename.app"
+  echo "Getting $app_path"
+  tree "$app_path"
+  cp -r "$app_path" ./
+  hdiutil detach /Volumes/$filename -force
+}
+
+# https://stackoverflow.com/questions/66891065/libprism-sw-dylib-cannot-be-opened-because-the-developer-cannot-be-verified-o
+function pck_explorer(){
+  sudo spctl --master-disable
+  dotnet ~/Applications/GodotPCKExplorer/GodotPckExplorer.Console.dll "$@"
+  sudo spctl --master-enable
+}
+
 dot_it godot_tools
+
+
+
+function export_then_extract(){
+  godot --headless --export-debug macOS "/Users/butchwesley/development/godot/export/NewGodot42.dmg"
+  cd /Users/butchwesley/development/godot/export/
+  extract_godot_app_from_dmg NewGodot42.dmg
+  cd -
+}

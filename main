@@ -154,6 +154,7 @@ function kil {
 	fi
 }
 
+
 function confirm {
 	local msg=$1
 	local choice='poop'

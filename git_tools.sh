@@ -4,6 +4,7 @@ git config --global pager.branch false
 alias gitcod='git checkout .'
 alias gpo='git push origin HEAD'
 alias gitkey='eval "$(ssh-agent -s)";ssh-add ~/.ssh/git_rsa'
+# alias gitsquash='git reset $(git merge-base ${defaultBranch} $(git rev-parse --abbrev-ref HEAD))'
 #----------------------
 #git
 #----------------------
@@ -18,7 +19,11 @@ git branch;
 echo
 echo "Status"
 echo "-------";
-git status'
+git status
+echo
+echo "Stashes"
+echo "-------";
+git stash list'
 
 func branch_file(){
   local branch_name=$1
