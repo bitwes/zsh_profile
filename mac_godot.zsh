@@ -9,9 +9,20 @@ export GODOT_EDITOR_DIR=~/Library/ApplicatioN\ Support/Godot/
 
 
 alias ngodot='open -n $GODOT'
+
 alias cpgut_here='cp -r $GUT/addons/gut/* ./addons/gut/'
 alias cpbitools_here='cp -r $BITOOLS/addons/bitools/* ./addons/bitools/'
+alias cpeditor_handles_here='cp -r $GODOT_DEV_DIR/EditorHandles/addons/editor_handles/* ./addons/editor_handles/'
+alias cpeditor_linkables_here='cp -r $GODOT_DEV_DIR/EditorLinkables/addons/editor_linkables/* ./addons/editor_linkables/'
+
 alias gut_output_tests='gdscript addons/gut/gut_cmdln.gd -gconfig= -gdir test/output_tests -gexit'
+
+func cpall_godot_tools_here(){
+  cpgut_here
+  cpbitools_here
+  cpeditor_handles_here
+  cpeditor_linkables_here
+}
 
 # ------------------------------------------------------------------------------
 # Pixel stuff
@@ -56,7 +67,7 @@ function pck_explorer(){
 }
 
 dot_it godot_tools
-
+dot_it godot_engine_tools.sh
 
 
 function export_then_extract(){

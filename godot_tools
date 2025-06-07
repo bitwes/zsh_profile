@@ -32,6 +32,7 @@ function _swith_to_godot_version(){
   export GODOT="/Applications/${app}/Contents/MacOS/Godot"
   godot --version
   echo $GODOT
+  echo $GUT
 }
 
 
@@ -41,36 +42,50 @@ function switch_to_godot_default(){
 
 
 function switch_to_godot_3_6(){
-  _swith_to_godot_version "Godot_3.6.rc1.app"
   export GUT="/Users/butchwesley/development/godot/guts/godot_3x"
+  _swith_to_godot_version "Godot_3.6.1.app"
 }
 
-
 function switch_to_godot_3(){
-  _swith_to_godot_version "Godot_3.5.3.app"
   export GUT="/Users/butchwesley/development/godot/guts/godot_3x"
+  _swith_to_godot_version "Godot_3.5.3.app"
 }
 
 function switch_to_godot_4_2(){
-  _swith_to_godot_version "Godot_4.2.app"
   export GUT="/Users/butchwesley/development/godot/guts/Gut"
+  _swith_to_godot_version "Godot_4.2.app"
 }
 
 function switch_to_godot_4(){
-  _swith_to_godot_version "Godot_4.3.app"
   export GUT="/Users/butchwesley/development/godot/guts/Gut"
+  _swith_to_godot_version "Godot_4.3.app"
+}
+
+function switch_to_godot_4_mono(){
+  export GUT="/Users/butchwesley/development/godot/guts/Gut"
+  _swith_to_godot_version "Godot_4.2_mono.app"
 }
 
 function switch_to_godot_4_4(){
-  _swith_to_godot_version "Godot_4.4_rc2.app"
-  export GUT="/Users/butchwesley/development/godot/guts/Gut"
+  export GUT="/Users/butchwesley/development/godot/guts/godot_4_4"
+  _swith_to_godot_version "Godot_4.4.1.app"
+}
+
+function switch_to_godot_4_5(){
+  export GUT="/Users/butchwesley/development/godot/guts/godot_4_4"
+  _swith_to_godot_version "Godot_4.5.dev.3.app"
 }
 
 
-function switch_to_godot_4_mono(){
-  _swith_to_godot_version "Godot_4.2_mono.app"
+
+function switch_to_godot_build(){
   export GUT="/Users/butchwesley/development/godot/guts/Gut"
+  export GODOT="/Users/butchwesley/development/godot/godot_engine/godot_latest/bin/godot.macos.editor.arm64"
+  godot --version
+  echo $GODOT
+  echo $GUT
 }
+
 
 
 # ------------------------------------------------------------------------------
@@ -207,3 +222,8 @@ function install_gut_tag(){
 function install_gut_branch(){
   install_gut "godot_4_fix_utf8_issue" "heads"
 }
+
+
+
+
+
