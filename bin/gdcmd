@@ -1,0 +1,37 @@
+#!/bin/zsh
+# ------------------------------------------------------------------------------
+# Use this to run a standalone script from anywhere in headless mode.
+# Add #!<path-to-this-script> to the top of a gdscript, make it executable
+# and then just run the thing.  It's great.  Or you can pass the path to the
+# script as the first param to this.
+# ------------------------------------------------------------------------------
+
+# Changes the working directory to that of the script before running it.
+function run_it_from_there(){
+  cd "$(dirname "$1")"
+  base_name=$(basename ${1})
+  eval $GODOT --headless -s $base_name
+}
+
+
+# sets --path option instead of changing the working directory.
+function run_it_from_here(){
+  the_dir="$(dirname "$1")"
+  base_name=$(basename ${1})
+  eval $GODOT --headless --no-header -s $base_name --path $the_dir
+}
+
+
+function main(){
+  if [[ -v GODOT ]]; then
+    if test -f $GODOT; then
+      run_it_from_here $1
+    else
+      echo "ERROR:  Path in \$GODOT [$GODOT] does not exist."
+    fi
+  else
+    echo "ERROR:  \$GODOT environment variable not set."
+  fi
+}
+
+main $@
