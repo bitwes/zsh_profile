@@ -4,13 +4,16 @@
 # Add #!<path-to-this-script> to the top of a gdscript, make it executable
 # and then just run the thing.  It's great.  Or you can pass the path to the
 # script as the first param to this.
+#
+# All parameters passed to this script are passed to the GDScript after --.
+# This means they are available via OS.get_cmdline_user_args().
 # ------------------------------------------------------------------------------
 
 # Changes the working directory to that of the script before running it.
 function run_it_from_there(){
   cd "$(dirname "$1")"
   base_name=$(basename ${1})
-  eval $GODOT --headless -s $base_name
+  eval $GODOT --headless --no-header -s $base_name -- $@
 }
 
 
@@ -18,14 +21,14 @@ function run_it_from_there(){
 function run_it_from_here(){
   the_dir="$(dirname "$1")"
   base_name=$(basename ${1})
-  eval $GODOT --headless --no-header -s $base_name --path $the_dir
+  eval $GODOT --headless --no-header -s $base_name --path $the_dir -- $@
 }
 
 
 function main(){
   if [[ -v GODOT ]]; then
     if test -f $GODOT; then
-      run_it_from_here $1
+      run_it_from_here $@
     else
       echo "ERROR:  Path in \$GODOT [$GODOT] does not exist."
     fi
