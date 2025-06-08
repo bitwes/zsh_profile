@@ -29,6 +29,7 @@ function main(){
   if [[ -v GODOT ]]; then
     if test -f $GODOT; then
       run_it_from_here $@
+      # run_it_from_there $@
     else
       echo "ERROR:  Path in \$GODOT [$GODOT] does not exist."
     fi

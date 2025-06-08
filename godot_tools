@@ -1,23 +1,24 @@
 #!/bin/zsh
 
+alias godot='eval $GODOT'
+alias godot_here='godot -e --path $PWD'
+alias gdscript='godot --path $PWD -s '
+
+
+dot_it godotenv.sh
+dot_it godot_engine_tools.sh
+
 # ------------------------------------------------------------------------------
 # The following must be setup per platform for this script to work
 #
 # export GODOT=''
 # ------------------------------------------------------------------------------
-alias godot='eval $GODOT'
-alias godot_here='godot -e --path $PWD' # hijacks the prompt with godot output.
-alias gdscript='godot --path $PWD -s '
 alias godot_loc="find . -name '*.gd' | xargs wc -l"
 alias godot_import='godot --headless --import'
 
-alias pixel_use_tcpip='adb tcpip 5555'
-alias disconnect_pixel='adb usb'
 
 alias godot_project_here='touch project.godot'
-alias gut_change_warnings="godot -s addons/gut/cli/change_project_warnings.gd --headless ++"
-alias gut_run_output_tests="gut '' '' -gdir res://test/output_tests"
-alias open_gut_documentation='open /Users/butchwesley/development/godot/guts/Gut/documentation/docs/_build/html/index.html'
+
 
 # alias adb='/Users/butchwesley/Library/Android/sdk/platform-tools/adb'
 func connect_pixel(){
@@ -26,65 +27,6 @@ func connect_pixel(){
   adb connect 192.168.1.115
 }
 
-
-function _swith_to_godot_version(){
-  app=$1
-  export GODOT="/Applications/${app}/Contents/MacOS/Godot"
-  godot --version
-  echo $GODOT
-  echo $GUT
-}
-
-
-function switch_to_godot_default(){
-  switch_to_godot_4
-}
-
-
-function switch_to_godot_3_6(){
-  export GUT="/Users/butchwesley/development/godot/guts/godot_3x"
-  _swith_to_godot_version "Godot_3.6.1.app"
-}
-
-function switch_to_godot_3(){
-  export GUT="/Users/butchwesley/development/godot/guts/godot_3x"
-  _swith_to_godot_version "Godot_3.5.3.app"
-}
-
-function switch_to_godot_4_2(){
-  export GUT="/Users/butchwesley/development/godot/guts/Gut"
-  _swith_to_godot_version "Godot_4.2.app"
-}
-
-function switch_to_godot_4(){
-  export GUT="/Users/butchwesley/development/godot/guts/Gut"
-  _swith_to_godot_version "Godot_4.3.app"
-}
-
-function switch_to_godot_4_mono(){
-  export GUT="/Users/butchwesley/development/godot/guts/Gut"
-  _swith_to_godot_version "Godot_4.2_mono.app"
-}
-
-function switch_to_godot_4_4(){
-  export GUT="/Users/butchwesley/development/godot/guts/godot_4_4"
-  _swith_to_godot_version "Godot_4.4.1.app"
-}
-
-function switch_to_godot_4_5(){
-  export GUT="/Users/butchwesley/development/godot/guts/godot_4_4"
-  _swith_to_godot_version "Godot_4.5.dev.3.app"
-}
-
-
-
-function switch_to_godot_build(){
-  export GUT="/Users/butchwesley/development/godot/guts/Gut"
-  export GODOT="/Users/butchwesley/development/godot/godot_engine/godot_latest/bin/godot.macos.editor.arm64"
-  godot --version
-  echo $GODOT
-  echo $GUT
-}
 
 
 
@@ -222,8 +164,3 @@ function install_gut_tag(){
 function install_gut_branch(){
   install_gut "godot_4_fix_utf8_issue" "heads"
 }
-
-
-
-
-

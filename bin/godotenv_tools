@@ -1,0 +1,121 @@
+#!/usr/bin/env ruby
+
+require 'pp'
+require 'optparse'
+
+# ------------------------------------------------------------------------------
+# Options
+# ------------------------------------------------------------------------------
+$banner  = "\
+Description:
+------------
+Helpers for godotenv command because I don't like bash but I can't do what
+I want to do in Ruby because I can manipulate the sessions environment
+variables from within ruby.
+
+Everything was originally going to exist here, but that isn't possible.
+
+Usage
+-----
+You probably shouldn't be using this directly.
+\n"
+
+Options = Struct.new(
+    :subcmd,
+    :version
+)
+
+
+def parse_options()
+    args = Options.new()
+
+    optparse = OptionParser.new do|opts|
+        opts.banner = $banner
+        opts.on( '-h', '--help', 'Display this screen' ) do
+            puts opts
+            exit
+        end
+
+        opts.on('-l', '--list', 'List Godot versions.') do
+            args.subcmd = 'list'
+        end
+
+        opts.on('-s version', '--switch', 'Switch version') do |value|
+            args.subcmd = 'switch'
+            args.version = value
+        end
+    end
+
+    optparse.parse!
+
+    return args
+rescue OptionParser::MissingArgument
+    puts optparse
+    raise
+end
+
+
+# ------------------------------------------------------------------------------
+# Private
+# ------------------------------------------------------------------------------j
+def _get_installed_godot_versions()
+    apps = Dir["/Applications/Godot*.app"]
+    versions = {}
+    apps.each { |app|
+        version = File.basename(app, ".*").sub!("Godot_", "")
+        versions[version] = app + "/Contents/MacOS/Godot"
+    }
+    return versions
+end
+
+
+def _get_special_versions(installed_versions)
+    spec_ver_env_var_prefix = "GODOT_SV_"
+    special_versions = {}
+    ENV.each { |key, value|
+        if(key.start_with?(spec_ver_env_var_prefix))
+            spec_key = key.sub(spec_ver_env_var_prefix, "")
+            special_versions[spec_key] = value
+            if(installed_versions.key?(value))
+                special_versions[spec_key] = installed_versions[value]
+            end
+        end
+    }
+    return special_versions
+end
+
+
+def all_versions()
+    vers = _get_installed_godot_versions()
+    vers.merge!(_get_special_versions(vers))
+    return vers
+end
+
+
+def switch_to_version(x)
+    versions = all_versions()
+    if(versions.key?(x))
+        puts versions[x]
+    else
+        puts("Godot Version [#{x}] not found")
+        exit(1)
+    end
+end
+
+
+# ------------------------------------------------------------------------------
+# Public
+# ------------------------------------------------------------------------------
+def main
+    args = parse_options()
+
+    if(args.subcmd == 'list')
+        # get_special_versions()
+        pp(all_versions())
+    elsif(args.subcmd == 'switch')
+        switch_to_version(args.version)
+    end
+end
+
+
+main

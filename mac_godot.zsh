@@ -3,19 +3,32 @@
 #		lines that start with "projects/::" are the lines that define what shows
 #   up when you launch gut.
 # ------------------------------------------------------------------------------
-export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
+# export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
 export GODOT_USER_DIR=~/Library/Application\ Support/Godot/app_userdata
-export GODOT_EDITOR_DIR=~/Library/ApplicatioN\ Support/Godot/
+export GODOT_EDITOR_DIR=~/Library/Application\ Support/Godot/
 
+# export GAME='/Users/butchwesley/development/godot/butch_game/ButchVBirds/game'
+export GUT='/Users/butchwesley/development/godot/guts/Gut'
+export BITOOLS='/Users/butchwesley/development/godot/BitoolsGodot'
+# export GODOT_DEV_DIR='/Users/butchwesley/development/godot'
 
 alias ngodot='open -n $GODOT'
-
 alias cpgut_here='cp -r $GUT/addons/gut/* ./addons/gut/'
 alias cpbitools_here='cp -r $BITOOLS/addons/bitools/* ./addons/bitools/'
 alias cpeditor_handles_here='cp -r $GODOT_DEV_DIR/EditorHandles/addons/editor_handles/* ./addons/editor_handles/'
 alias cpeditor_linkables_here='cp -r $GODOT_DEV_DIR/EditorLinkables/addons/editor_linkables/* ./addons/editor_linkables/'
 
 alias gut_output_tests='gdscript addons/gut/gut_cmdln.gd -gconfig= -gdir test/output_tests -gexit'
+
+alias pixel_use_tcpip='adb tcpip 5555'
+alias disconnect_pixel='adb usb'
+
+
+alias gut_change_warnings="godot -s addons/gut/cli/change_project_warnings.gd --headless ++"
+alias gut_run_output_tests="gut '' '' -gdir res://test/output_tests"
+alias open_gut_documentation='open /Users/butchwesley/development/godot/guts/Gut/documentation/docs/_build/html/index.html'
+
+dot_it godot_tools
 
 func cpall_godot_tools_here(){
   cpgut_here
@@ -59,15 +72,13 @@ function extract_godot_app_from_dmg(){
   hdiutil detach /Volumes/$filename -force
 }
 
+
 # https://stackoverflow.com/questions/66891065/libprism-sw-dylib-cannot-be-opened-because-the-developer-cannot-be-verified-o
 function pck_explorer(){
   sudo spctl --master-disable
   dotnet ~/Applications/GodotPCKExplorer/GodotPckExplorer.Console.dll "$@"
   sudo spctl --master-enable
 }
-
-dot_it godot_tools
-dot_it godot_engine_tools.sh
 
 
 function export_then_extract(){
