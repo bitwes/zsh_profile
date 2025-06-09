@@ -1,14 +1,25 @@
 #!/bin/zsh
 
-export GODOT="NOT_SET"
+# ##############################################################################
+# Utilities for setting the GODOT environment variable.  Uses
+# $ZSHFILES/bin/godotenv_tools ruby script for some stuff.  I hate bash.
+# ##############################################################################
+
+
 # -----------------------
 # GODOT_SV_ vars are "special versions".  If the value is a version number then
 # it will be found in /Applications the same way other version numbers are
 # found.  Otherwise it is treated as an absolute path to Godot binary.
 #
-# Make as many as you want.
-export GODOT_SV_4="4.3"
-export GODOT_SV_3="3.5.3"
+# Make as many as you want.  Use these with godotenv by sending whatever follows
+# "GODOT_SV_" in the variable name.  For example, with these you can do:
+#   godotenv build
+#   godotenv 3
+#
+# These should probably be moved to mac_godot.zsh, but then I'd have to explain
+# things there and here.
+export GODOT_SV_4="4.3"     # Default Godot 4 version I am using
+export GODOT_SV_3="3.5.3"   # Default Godot 3 version I am using
 export GODOT_SV_build="/Users/butchwesley/development/godot/godot_engine/godot_latest/bin/godot.macos.editor.arm64"
 # -----------------------
 

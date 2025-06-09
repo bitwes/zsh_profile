@@ -2,6 +2,8 @@
 dot_it() {
   if [ -f "$ZSHFILES/$1" ] ; then
     eval ". $ZSHFILES/$1"
+  else
+    echo "Missing file:\n $ZSHFILES/$1"
   fi
 }
 

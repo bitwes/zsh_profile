@@ -3,7 +3,6 @@
 #		lines that start with "projects/::" are the lines that define what shows
 #   up when you launch gut.
 # ------------------------------------------------------------------------------
-# export GODOT='/Applications/Godot.app/Contents/MacOS/Godot'
 export GODOT_USER_DIR=~/Library/Application\ Support/Godot/app_userdata
 export GODOT_EDITOR_DIR=~/Library/Application\ Support/Godot/
 
@@ -16,7 +15,7 @@ alias cpbitools_here='cp -r $BITOOLS/addons/bitools/* ./addons/bitools/'
 alias cpeditor_handles_here='cp -r $GODOT_DEV_DIR/EditorHandles/addons/editor_handles/* ./addons/editor_handles/'
 alias cpeditor_linkables_here='cp -r $GODOT_DEV_DIR/EditorLinkables/addons/editor_linkables/* ./addons/editor_linkables/'
 
-dot_it godot_tools
+dot_it ./godot/godot_main.sh
 dot_it gut.sh
 
 

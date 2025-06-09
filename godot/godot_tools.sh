@@ -1,15 +1,6 @@
 #!/bin/zsh
 
-alias godot='eval $GODOT'
-alias godot_here='godot -e --path $PWD'
-alias godot_import='godot --headless --import'
-alias godot_project_here='touch project.godot'
-alias gdscript='godot --path $PWD -s '
-
 # Original "gdt" alias was "git diff-tree --no-commit-id --name-only -r"
-
-dot_it godotenv.sh
-dot_it godot_engine_tools.sh
 
 # ------------------------------------------------------------------------------
 # The following must be setup per platform for this script to work
