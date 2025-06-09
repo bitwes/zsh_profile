@@ -103,6 +103,15 @@ def switch_to_version(x)
 end
 
 
+def list()
+    c1_pad = 20
+    versions = all_versions()
+    sorted = versions.keys.sort
+    sorted.each { |k|
+        puts("#{k.ljust(c1_pad)}#{versions[k]}")
+    }
+end
+
 # ------------------------------------------------------------------------------
 # Public
 # ------------------------------------------------------------------------------
@@ -111,7 +120,7 @@ def main
 
     if(args.subcmd == 'list')
         # get_special_versions()
-        pp(all_versions())
+        list()
     elsif(args.subcmd == 'switch')
         switch_to_version(args.version)
     end

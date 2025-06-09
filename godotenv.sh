@@ -16,7 +16,7 @@ export GODOT_SV_build="/Users/butchwesley/development/godot/godot_engine/godot_l
 # #############################
 # Private
 # #############################
-function _switch_to_godot_version2(){
+function _change_godot_version(){
     app=$1
 
     godotpath="$(godotenv_tools -s $app)"
@@ -51,6 +51,6 @@ function godotenv(){
     elif [ $1 = "-l" ]; then
         godotenv_tools -l
     else
-        _switch_to_godot_version2 $@
+        _change_godot_version $@
     fi
 }

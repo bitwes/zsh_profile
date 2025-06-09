@@ -2,8 +2,11 @@
 
 alias godot='eval $GODOT'
 alias godot_here='godot -e --path $PWD'
+alias godot_import='godot --headless --import'
+alias godot_project_here='touch project.godot'
 alias gdscript='godot --path $PWD -s '
 
+# Original "gdt" alias was "git diff-tree --no-commit-id --name-only -r"
 
 dot_it godotenv.sh
 dot_it godot_engine_tools.sh
@@ -13,21 +16,7 @@ dot_it godot_engine_tools.sh
 #
 # export GODOT=''
 # ------------------------------------------------------------------------------
-alias godot_loc="find . -name '*.gd' | xargs wc -l"
-alias godot_import='godot --headless --import'
-
-
-alias godot_project_here='touch project.godot'
-
-
-# alias adb='/Users/butchwesley/Library/Android/sdk/platform-tools/adb'
-func connect_pixel(){
-  adb devices
-  #adb tcpip 5555 (adb -s FA7B41A00312 tcpip 5555)
-  adb connect 192.168.1.115
-}
-
-
+alias gdt_loc="find . -name '*.gd' | xargs wc -l"
 
 
 # ------------------------------------------------------------------------------
@@ -40,7 +29,7 @@ func connect_pixel(){
 # $1:  the name of the script
 # $2:  (optional) pattern for functions
 # ------------------------------------------------------------------------------
-function list_functions(){
+function gdt_list_functions(){
 	local cmd="find ./ -name $1 -exec cat {} \; |  grep -n 'func '"
 
 	if [[ -n $2 ]]; then
@@ -58,7 +47,7 @@ function list_functions(){
 # $1:  the name of the script
 # $2:  (optional) pattern for functions
 # ------------------------------------------------------------------------------
-function list_classes(){
+function gdt_list_classes(){
 	local cmd="find ./ -name $1 -exec cat {} \; |  grep -n 'class '"
 
 	if [[ -n $2 ]]; then
@@ -72,7 +61,7 @@ function list_classes(){
 # print out accessors for the passed in property.  It also copies them to the
 # clipboard.
 # ------------------------------------------------------------------------------
-function godot_accessor() {
+function gdt_accessor() {
 	name=${1#"_"}
 	tab=$'\t'
 
@@ -85,82 +74,4 @@ ${tab}$1 = $name
 EOM
   echo "$OUTPUT"
 	echo "$OUTPUT" | pbcopy
-}
-
-
-# ------------------------------------------------------------------------------
-# Run Gut.  This only works from the root directory of your game.
-#
-# Parameters
-# ----------
-# $1: (optional) specific script name (turns it into a -gselect gut option).
-# $2: (optional) a string to filter test names with (turns it
-#     into a -gunit_test_name gut option).
-# $n: any options after the 2nd are sent to gut as is.  These could be godot
-#     or gut options.
-#
-# If you want to specify options w/o specifying a script or test name you can
-# pass '' for $1 and $2.  e.g. gut '' '' "-glog=99"
-# ------------------------------------------------------------------------------
-function gut(){
-  local script=''
-  if [[ $1 ]]; then
-    script=" -gselect=$1 "
-  else
-    script=""
-  fi
-
-  local t=''
-  if [[ $2 ]]; then
-    test=" -gunit_test_name=$2"
-  else
-    test=""
-  fi
-
-	local rest_of_args="$3 ${@:3}" # this is a bit of magic that I don't remember
-  local options="--debug-collisions --path $PWD -d -s addons/gut/gut_cmdln.gd $script $test $rest_of_args"
-	#local options="--path $PWD -s addons/gut/gut_cmdln.gd $script $test $rest_of_args"
-
-	eval "$GODOT $options"
-  echo "GUT quit with exit code $?"
-}
-
-
-# ------------------------------------------------------------------------------
-# Installs GUT from github.
-#
-# Samples:
-# install_gut "9.1.1" "tags"
-#     https://github.com/bitwes/Gut/archive/refs/tags/v9.1.1.zip
-# install_gut "godot_4_fix_utf8_issue" "heads"
-#     https://github.com/bitwes/Gut/archive/refs/heads/godot_4_fix_utf8_issue.zip
-# ------------------------------------------------------------------------------
-function install_gut(){
-  local gut_version=$1
-  local where=$2
-
-  local extra=""
-  if [ $where = "tags" ]; then
-    extra="v"
-  fi
-
-  mkdir ./__gut_install
-  local gut_url="https://github.com/bitwes/Gut/archive/refs/${where}/${extra}${gut_version}.zip"
-  echo $gut_url
-  wget $gut_url -O ./__gut_install/gut.zip;
-  unzip __gut_install/gut.zip -d ./__gut_install/
-  rsync -av __gut_install/Gut-$gut_version/addons/ ./addons
-  rm -r ./__gut_install
-}
-
-
-# example
-function install_gut_tag(){
-  install_gut "9.1.1" "tags"
-}
-
-
-# example
-function install_gut_branch(){
-  install_gut "godot_4_fix_utf8_issue" "heads"
 }
