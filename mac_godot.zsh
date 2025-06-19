@@ -3,6 +3,7 @@
 #		lines that start with "projects/::" are the lines that define what shows
 #   up when you launch gut.
 # ------------------------------------------------------------------------------
+export GODOT_ENGINE_DIR="/Users/butchwesley/development/godot/godot_engine/godot_latest"
 export GODOT_USER_DIR=~/Library/Application\ Support/Godot/app_userdata
 export GODOT_EDITOR_DIR=~/Library/Application\ Support/Godot/
 
@@ -11,9 +12,6 @@ export BITOOLS='/Users/butchwesley/development/godot/BitoolsGodot'
 # export GODOT_DEV_DIR='/Users/butchwesley/development/godot'
 
 alias ngodot='open -n $GODOT'
-alias cpbitools_here='cp -r $BITOOLS/addons/bitools/* ./addons/bitools/'
-alias cpeditor_handles_here='cp -r $GODOT_DEV_DIR/EditorHandles/addons/editor_handles/* ./addons/editor_handles/'
-alias cpeditor_linkables_here='cp -r $GODOT_DEV_DIR/EditorLinkables/addons/editor_linkables/* ./addons/editor_linkables/'
 
 dot_it ./godot/godot_main.sh
 dot_it gut.sh
@@ -28,13 +26,6 @@ func connect_pixel(){
   adb connect 192.168.1.115
 }
 
-
-func cpall_godot_tools_here(){
-  cpgut_here
-  cpbitools_here
-  cpeditor_handles_here
-  cpeditor_linkables_here
-}
 
 # ------------------------------------------------------------------------------
 # Pixel stuff
@@ -73,4 +64,46 @@ function export_then_extract(){
   cd /Users/butchwesley/development/godot/export/
   extract_godot_app_from_dmg NewGodot42.dmg
   cd -
+}
+
+
+# animals=( ["moo"]="cow" ["woof"]="dog")
+export MY_GODOT_TOOLS_DIR="/Users/butchwesley/development/godot/Godot4Projects/MyTools"
+# key is the directory name in addons/, value is the directory name in MyTools
+typeset -Agx MY_GODOT_TOOLS=(
+  ["bitools"]="BitoolsGodot"
+  ["editor_handles"]="EditorHandles"
+  ["editor_linkables"]="EditorLinkables"
+  ["input_recorder"]="InputRecorder" )
+
+
+function godot_tools_list(){
+  echo $MY_GODOT_TOOLS_DIR
+  padding="                    "
+  for key in ${(k)MY_GODOT_TOOLS};
+    printf "%s%s %s\n" "  - $key" "${padding:${#key}}" "$MY_GODOT_TOOLS[$key]/addons/$key"
+}
+
+
+function cpgodot_tool_here(){
+  local tool=''
+
+  if [ $1 ]; then
+    tool=$1
+  else
+    godot_tools_list
+    return
+  fi
+
+  the_keys=${(k)MY_GODOT_TOOLS}
+  idx=${the_keys[(Ie)$tool]}
+  # echo "$tool index = $idx"
+
+  if [ "$idx" -eq "0" ]; then
+    godot_tools_list
+    echo "UNKNOWN TOOL $tool"
+  else
+    # echo "it equals:  $MY_GODOT_TOOLS[$tool]"
+    cp -r $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool/* ./addons/$tool/
+  fi
 }

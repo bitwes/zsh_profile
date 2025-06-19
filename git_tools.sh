@@ -19,11 +19,7 @@ git branch;
 echo
 echo "Status"
 echo "-------";
-git status
-echo
-echo "Stashes"
-echo "-------";
-git stash list'
+git status'
 
 func branch_file(){
   local branch_name=$1
@@ -40,30 +36,32 @@ function _gh_wiki_url(){
 # Opens the github page for the current git repository in your browser
 # git@github.com:jasonneylon/dotfiles.git
 # https://github.com/jasonneylon/dotfiles/
-# function gh() {
-#   local remote='origin'
-#   if [ $1 ]; then
-#     remote=$1
-#   fi
+function gh_browser() {
+  local remote='origin'
+  if [ $1 ]; then
+    remote=$1
+  fi
 
-#   giturl=$(git config --get remote.$remote.url)
-#   echo $giturl
-#   if [[ "$giturl" == "" ]]
-#     then
-#      echo "Not a git repository or no remote.origin.url set"
-#      return 1;
-#   fi
+  giturl=$(git config --get remote.$remote.url)
+  echo $giturl
+  if [[ "$giturl" == "" ]]
+    then
+     echo "Not a git repository or no remote.origin.url set"
+     return 1;
+  fi
 
-#   giturl=${giturl/git\@github\.com\:/https://github.com/}
-#   giturl=${giturl/git\@github\.build\.ge\.com\:/https://github\.build\.ge\.com/}
-#   giturl=${giturl/\.git/\/tree/}
-#   branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
-#   branch="(unnamed branch)"     # detached HEAD
-#   branch=${branch##refs/heads/}
-#   giturl=$giturl$branch
+  giturl=${giturl/git\@github\.com\:/https://github.com/}
+  giturl=${giturl/git\@github\.build\.ge\.com\:/https://github\.build\.ge\.com/}
+  giturl=${giturl/\.git/\/tree/}
+  branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
+  branch="(unnamed branch)"     # detached HEAD
+  branch=${branch##refs/heads/}
+  giturl=$giturl$branch
 
-#   `open $giturl`
-# }
+  # `open $giturl`
+  echo $giturl
+  echo $giturl | pbcopy
+}
 
 function gh_new_issue(){
   giturl=$(git config --get remote.origin.url)

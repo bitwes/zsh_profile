@@ -3,8 +3,11 @@ export GUT='/Users/butchwesley/development/godot/guts/Gut'
 alias gut_output_tests='gdscript addons/gut/gut_cmdln.gd -gconfig= -gdir test/output_tests -gexit'
 alias gut_change_warnings="godot -s addons/gut/cli/change_project_warnings.gd --headless ++"
 alias gut_run_output_tests="gut '' '' -gdir res://test/output_tests"
-alias gut_open_documentation='open /Users/butchwesley/development/godot/guts/Gut/documentation/docs/_build/html/index.html'
 alias gut_cp_here='cp -r $GUT/addons/gut/* ./addons/gut/'
+alias guth="gut '' '' -gh"
+alias gut="gdscript addons/gut/gut_cmdln.gd"
+# alias cpgut_here='cp -rv $GUT/addons/gut/* ./addons/gut/'
+alias cpgut_here='rsync -av $GUT/addons/gut ./addons'
 
 # ------------------------------------------------------------------------------
 # Run Gut.  This only works from the root directory of your game.
@@ -20,7 +23,7 @@ alias gut_cp_here='cp -r $GUT/addons/gut/* ./addons/gut/'
 # If you want to specify options w/o specifying a script or test name you can
 # pass '' for $1 and $2.  e.g. gut '' '' "-glog=99"
 # ------------------------------------------------------------------------------
-function gut(){
+function gutsmart(){
   local script=''
   if [[ $1 ]]; then
     script=" -gselect=$1 "
@@ -82,3 +85,13 @@ function install_gut_tag(){
 function install_gut_branch(){
   install_gut "godot_4_fix_utf8_issue" "heads"
 }
+
+
+
+# #####################
+# Documentation
+# #####################
+function gut_generate_documentation(){
+    zsh documentation/generate_rst.sh
+}
+alias gut_open_documentation='open /Users/butchwesley/development/godot/guts/Gut/documentation/docs/_build/html/index.html'
