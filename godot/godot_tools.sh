@@ -68,5 +68,9 @@ EOM
 }
 
 function godot_proj_info(){
-	gdcmd $ZSHFILES/godot/godot_proj_info.gd -- --path $PWD $@
+	local p=$PWD
+	if [ $1 ]; then
+		p=`readlink -f $1`
+	fi
+	gdcmd $ZSHFILES/godot/godot_proj_info.gd ++ --path $p $@
 }
