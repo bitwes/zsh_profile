@@ -1,19 +1,42 @@
 #!/bin/zsh
 # ------------------------------------------------------------------------------
-# Use this to run a standalone script from anywhere in headless mode.
-# Add #!<path-to-this-script> to the top of a gdscript, make it executable
-# and then just run the thing.  It's great.  Or you can pass the path to the
-# script as the first param to this.
+# Add this script somewhere in your PATH.
+# Make "standalone" GDScripts.
+# Run them and enjoy yourself.
 #
+#
+# Example my_cmd.gd Script:
+# ----------------
+# #!gdcmd
+# extends SceneTree
+# func _init():
+#     print(OS.get_cmdline_user_args())
+#     print("Hello World")
+#     quit()
+#
+#
+# Run it
+# ---------
+# gdcmd my_cmd.gd
+# chmod +x my_cmd.gd
+# ./my_cmd.gd
+#
+#
+# More Info
+# ---------
 # All parameters passed to this script are passed to the GDScript after --.
 # This means they are available via OS.get_cmdline_user_args().
+# If that's not what you want, then change "-- $@" to "$@" in
+# run_it_from_here.
 # ------------------------------------------------------------------------------
+export GODOTCMD=`godotenv_tools -s 4`
+
 
 # Changes the working directory to that of the script before running it.
 function run_it_from_there(){
   cd "$(dirname "$1")"
   base_name=$(basename ${1})
-  eval $GODOT --headless --no-header -s $base_name -- $@
+  eval $GODOTCMD --headless --no-header -s $base_name -- $@
 }
 
 
@@ -21,20 +44,20 @@ function run_it_from_there(){
 function run_it_from_here(){
   the_dir="$(dirname "$1")"
   base_name=$(basename ${1})
-  eval $GODOT --headless --no-header -s $base_name --path $the_dir -- $@
+  eval $GODOTCMD --headless --no-header -s $base_name --path $the_dir -- $@
 }
 
 
 function main(){
-  if [[ -v GODOT ]]; then
-    if test -f $GODOT; then
+  if [[ -v GODOTCMD ]]; then
+    if test -f $GODOTCMD; then
       run_it_from_here $@
       # run_it_from_there $@
     else
-      echo "ERROR:  Path in \$GODOT [$GODOT] does not exist."
+      echo "ERROR:  Path in \$GODOTCMD [$GODOTCMD] does not exist."
     fi
   else
-    echo "ERROR:  \$GODOT environment variable not set."
+    echo "ERROR:  \$GODOTCMD environment variable not set."
   fi
 }
 

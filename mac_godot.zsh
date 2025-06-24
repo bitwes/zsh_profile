@@ -104,6 +104,7 @@ function cpgodot_tool_here(){
     echo "UNKNOWN TOOL $tool"
   else
     # echo "it equals:  $MY_GODOT_TOOLS[$tool]"
-    cp -r $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool/* ./addons/$tool/
+    rsync -av $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool ./addons
+    # cp -r $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool/* ./addons/$tool/
   fi
 }

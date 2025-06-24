@@ -66,3 +66,7 @@ EOM
   echo "$OUTPUT"
 	echo "$OUTPUT" | pbcopy
 }
+
+function godot_proj_info(){
+	gdcmd $ZSHFILES/godot/godot_proj_info.gd -- --path $PWD $@
+}

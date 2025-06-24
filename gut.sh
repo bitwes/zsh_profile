@@ -3,8 +3,6 @@ export GUT='/Users/butchwesley/development/godot/guts/Gut'
 alias gut_output_tests='gdscript addons/gut/gut_cmdln.gd -gconfig= -gdir test/output_tests -gexit'
 alias gut_change_warnings="godot -s addons/gut/cli/change_project_warnings.gd --headless ++"
 alias gut_run_output_tests="gut '' '' -gdir res://test/output_tests"
-alias gut_cp_here='cp -r $GUT/addons/gut/* ./addons/gut/'
-alias guth="gut '' '' -gh"
 alias gut="gdscript addons/gut/gut_cmdln.gd"
 # alias cpgut_here='cp -rv $GUT/addons/gut/* ./addons/gut/'
 alias cpgut_here='rsync -av $GUT/addons/gut ./addons'
