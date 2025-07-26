@@ -18,9 +18,11 @@
 #
 # These should probably be moved to mac_godot.zsh, but then I'd have to explain
 # things there and here.
+export GODOT_BUILDS_DIR="/Users/butchwesley/development/godot/godot_engine/builds"
 export GODOT_SV_4="4.4.1"     # Default Godot 4 version I am using
 export GODOT_SV_3="3.5.3"   # Default Godot 3 version I am using
-export GODOT_SV_build="/Users/butchwesley/development/godot/godot_engine/godot_latest/bin/godot.macos.editor.arm64"
+# export GODOT_SV_build="/Users/butchwesley/development/godot/godot_engine/godot_latest/bin/godot.macos.editor.arm64"
+# export GODOT_SV_4_5_CUSTOM="/Users/butchwesley/development/godot/godot_engine/builds/godot_4.5.custom"
 # -----------------------
 
 

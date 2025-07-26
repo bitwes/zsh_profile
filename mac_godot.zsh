@@ -103,8 +103,29 @@ function cpgodot_tool_here(){
     godot_tools_list
     echo "UNKNOWN TOOL $tool"
   else
-    # echo "it equals:  $MY_GODOT_TOOLS[$tool]"
-    rsync -av $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool ./addons
-    # cp -r $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool/* ./addons/$tool/
+    local dest="./addons/$tool"
+    if [ -d  "$dest" ]; then
+      # echo "it equals:  $MY_GODOT_TOOLS[$tool]"
+      rsync -av $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool ./addons
+      # cp -r $MY_GODOT_TOOLS_DIR/$MY_GODOT_TOOLS[$tool]/addons/$tool/* ./addons/$tool/
+    else
+      echo "$tool is not installed.  Create $dest then run again"
+    fi
   fi
+}
+
+
+function update_godot_tools(){
+  for i in ${(k)MY_GODOT_TOOLS}
+  do
+    if [ -d "./addons/$i" ]; then
+      echo -n "Update $i ? (y/n)  "
+      read confirm
+      if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]; then
+        cpgodot_tool_here $i
+      else
+        echo "    Skipping $i"
+      fi
+    fi
+  done
 }

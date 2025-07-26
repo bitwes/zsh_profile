@@ -75,13 +75,26 @@ function install_gut(){
 
 # example
 function install_gut_tag(){
-  install_gut "9.1.1" "tags"
+  local tag="9.4.0"
+  if [ $1 ]; then
+    tag="$1"
+  else
+    echo "Installing default tag $tag"
+  fi
+  # install_gut "9.4.0" "tags"
+  install_gut $tag "tags"
 }
 
 
 # example
 function install_gut_branch(){
-  install_gut "godot_4_fix_utf8_issue" "heads"
+  local branch="main"
+  if [ $1 ]; then
+    branch="$1"
+  else
+    echo "Installing default branch $branch"
+  fi
+  install_gut $branch "heads"
 }
 
 

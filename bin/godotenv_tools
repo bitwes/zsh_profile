@@ -85,9 +85,21 @@ def _get_special_versions(installed_versions)
 end
 
 
+def _get_build_versions()
+    apps = Dir[ENV['GODOT_BUILDS_DIR'] + "/*"]
+    versions = {}
+    apps.each { |app|
+        version = File.basename(app).sub!("godot_", "")
+        versions["build:" + version] = app
+    }
+    return versions
+end
+
+
 def all_versions()
     vers = _get_installed_godot_versions()
     vers.merge!(_get_special_versions(vers))
+    vers.merge!(_get_build_versions())
     return vers
 end
 
@@ -97,8 +109,20 @@ def switch_to_version(x)
     if(versions.key?(x))
         puts versions[x]
     else
-        puts("Godot Version [#{x}] not found")
-        exit(1)
+        similar = versions.keys().filter{ |entry|
+            entry.start_with?(x)
+        }
+        # puts(similar)
+        if(similar.length == 1)
+            puts versions[similar[0]]
+        else
+            if(similar.length > 1)
+                puts("Too many versions matched, be more specific:  \n  " + similar.join("\n  "))
+            else
+                puts("Godot Version [#{x}] not found")
+            end
+            exit(1)
+        end
     end
 end
 

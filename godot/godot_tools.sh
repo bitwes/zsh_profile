@@ -67,6 +67,7 @@ EOM
 	echo "$OUTPUT" | pbcopy
 }
 
+
 function godot_proj_info(){
 	local p=$PWD
 	if [ $1 ]; then
