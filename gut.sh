@@ -106,3 +106,5 @@ function gut_generate_documentation(){
     zsh documentation/generate_rst.sh
 }
 alias gut_open_documentation='open /Users/butchwesley/development/godot/guts/Gut/documentation/docs/_build/html/index.html'
+
+alias gut_output_tests="gut -gconfig= -gdir test/output_tests -gexit -gignore_pause"

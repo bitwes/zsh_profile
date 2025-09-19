@@ -136,3 +136,4 @@ export GIT_EXTERNAL_DIFF
 
 alias hide_git='git config --global oh-my-zsh.hide-status 1'
 alias show_git='git config --global oh-my-zsh.hide-status 0'
+

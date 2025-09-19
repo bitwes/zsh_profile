@@ -1,0 +1,87 @@
+#!/usr/bin/ruby
+
+# $ git branch -vva
+#   global_class_cache_updater                 b3c5b2f [origin/global_class_cache_updater] refactors, comments, help
+#   godot_4_4_1                                9cdba73 [origin/godot_4_4_1] fix: register_inner_classes can handle cyclic dependencies (#750)
+#   i660                                       2345657 test resources
+#   i706_inst_to_dict_POC                      e85e2e2 [origin/i706_inst_to_dict_POC] a bit more experimenting
+# * i761_abstract_classes                      3c93265 [origin/i761_abstract_classes] more musings
+#   input_mocking_documentation                4ff5a84 [origin/input_mocking_documentation] end of draft 3
+#   main                                       ca1551b [origin/main] readme links
+#   main_better_print_prop_utils               17334f3 added changes i made in another project
+#   singleton_mocking                          48437a5 wip
+#   src_dir_export                             ebec75a asdf
+#   remotes/origin/HEAD                        -> origin/main
+#   remotes/origin/g4_more_input_mocking       b354f33 do not print a file source
+#   remotes/origin/global_class_cache_updater  b3c5b2f refactors, comments, help
+#   remotes/origin/godot_2x                    a770340 README'
+#   remotes/origin/godot_3x                    c11ba9d version bump
+#   remotes/origin/godot_4_4_1                 9cdba73 fix: register_inner_classes can handle cyclic dependencies (#750)
+#   remotes/origin/i706_inst_to_dict_POC       e85e2e2 a bit more experimenting
+#   remotes/origin/i761_abstract_classes       3c93265 more musings
+#   remotes/origin/input_mocking_documentation 4ff5a84 end of draft 3
+#   remotes/origin/main                        ca1551b readme links
+
+def parse_line(line)
+    parts = line.split("->")
+    result = {
+        :branch => parts[0],
+        :remote => nil,
+        :branch_name => nil,
+        :upstream => parts[1],
+        :hash => parts[2]
+    }
+
+    branch_parts = result[:branch].split('/')
+    if(branch_parts.size > 1)
+        result[:remote] = branch_parts[0]
+        result[:branch_name] = branch_parts[1]
+    else
+        result[:branch_name] = result[:branch]
+    end
+    # puts(result)
+    return result
+end
+
+
+
+def parse_output(output)
+    lines = output.split("\n")
+    local_branches = []
+    remote_branches = []
+    both = []
+    missing_upstream = []
+
+    for i in 1..(lines.length() -1)
+        result = parse_line(lines[i])
+        if(result[:upstream] != "")
+            both.append(result)
+        elsif(result[:remote] == nil)
+            local_branches.append(result)
+        else
+            remote_branches.append(result)
+        end
+    end
+
+    for i in 1..(local_branches.length() -1)
+        remote = remote_branches.select {|b| b[:branch_name] > local_branches[i][:branch_name] }
+        puts(remote)
+    end
+
+    puts("-- Both --")
+    puts(both)
+    puts("-- Local Only--")
+    puts(local_branches)
+    puts("-- Remote Only--")
+    puts(remote_branches)
+end
+
+
+def main
+    result = `git branch --format "%(refname:short)->%(upstream)->%(tree)" -va`
+    parse_output(result)
+    # puts(result)
+end
+
+
+main()

@@ -106,8 +106,8 @@ lsdays(){
 # I guess this works, who knows.
 #------------------------------------------------------
 linuxversion(){
-    uname -mrs
-    cat /etc/*-release
+	uname -mrs
+	cat /etc/*-release
 }
 
 
@@ -125,7 +125,7 @@ mkcd(){
 # Set the title of the tab and window in iterm2
 #------------------------------------------------------
 function title {
-    echo -ne "\033]0;"$*"\007"
+	echo -ne "\033]0;"$*"\007"
 }
 
 
@@ -166,4 +166,55 @@ function confirm {
 	done
 
 	echo "${choice}"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#------------------------------------------------------
+#pipe lsext to this to get all files by extension.
+#This will ls by each extension unless it's an actual
+#filename, in which case it creates an array that will
+#spit them out at the end as a list of files.
+#------------------------------------------------------
+_ls_by_extension(){
+	# local idx=0
+	# local loop_counter=0
+	# local files
+	# files=()
+
+	read j
+	echo $j
+	while [ "$j" != "" ]; do
+		if [ -f ".$j" ]; then
+			# $files[$idx]=$j
+			# let "idx += 1"
+		else
+			echo "${txtund}${txtcyn}.$j${txtrst}"
+			echo "`ls -la *.$j `"
+			echo
+		fi
+
+		read j
+	done
+
+	# if [ "$idx" -gt "0" ]; then
+	# 	echo "${txtund}${txtcyn}Hidden Files${txtrst}"
+	# 	while [ "$loop_counter" -lt "$idx" ]; do
+	# 		echo ".${files[$loop_counter]}"
+	# 		let "loop_counter += 1"
+	# 	done
+	# fi
 }
