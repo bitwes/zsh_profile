@@ -104,22 +104,36 @@ def print_branches(branches)
 end
 
 
-def print_parse_result(parse_result)
+def print_parse_result(parse_result, option)
     title = "Branch".ljust(40) + " local   remote"
     puts(title)
     puts("".ljust(title.length, '-'))
 
-    print_branches(parse_result[:missing_upstream])
-    print_branches(parse_result[:both])
-    print_branches(parse_result[:local_branches])
-    print_branches(parse_result[:remote_branches])
+    if(option == "remote")
+        print_branches(parse_result[:both])
+        print_branches(parse_result[:remote_branches])
+    elsif(option == "remote_only")
+        print_branches(parse_result[:remote_branches])
+    elsif(option == "local_only")
+        print_branches(parse_result[:missing_upstream])
+        print_branches(parse_result[:local_branches])
+    elsif(option == "local")
+        print_branches(parse_result[:missing_upstream])
+        print_branches(parse_result[:both])
+        print_branches(parse_result[:local_branches])
+    else
+        print_branches(parse_result[:missing_upstream])
+        print_branches(parse_result[:both])
+        print_branches(parse_result[:local_branches])
+        print_branches(parse_result[:remote_branches])
+    end
 
 end
 
 def main
     cmd_result = `git branch --format "%(refname:short)->%(upstream)->%(tree:short)" -va`
     parse_result = parse_output(cmd_result)
-    print_parse_result(parse_result)
+    print_parse_result(parse_result, ARGV[0])
 end
 
 
