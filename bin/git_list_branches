@@ -1,14 +1,26 @@
 #!/usr/bin/ruby
+require 'date'
+require 'pp'
+
+
+"""
+this could be used to show remote branches that have been deleted:
+git fetch -p --dry-run -v
+"""
+
+$delimeter = "->"
 
 def parse_line(line)
-    parts = line.split("->")
+    parts = line.split($delimeter)
     result = {
         :branch => parts[0],
+        :upstream => parts[1],
+        :hash => parts[2],
+        :creatordate => Date.parse(parts[3]),
+
         :remote => nil,
         :branch_name => nil,
-        :upstream => parts[1],
         :upstream_hash => nil,
-        :hash => parts[2],
         :possible_remote => nil,
     }
 
@@ -19,7 +31,11 @@ def parse_line(line)
     else
         result[:branch_name] = result[:branch]
     end
-    # puts(result)
+
+    if(result[:upstream] != '')
+        result[:remote] = result[:upstream].split('/')[2]
+    end
+
     return result
 end
 
@@ -45,7 +61,6 @@ def parse_output(output)
         idx = remote_branches.find_index {|e| e[:branch_name] == entry[:branch_name]}
         if(idx != nil)
             entry[:upstream_hash] = remote_branches[idx][:hash]
-            # print("remove this = #{remove_this}")
             remote_branches.delete_at(idx)
         end
     end
@@ -64,12 +79,10 @@ def parse_output(output)
 
     for entry in missing_upstream
         local_branches.delete_if { |i|
-            # puts("     #{i[:branch_name]} == #{entry[:branch_name]}")
             i[:branch_name] == entry[:branch_name]
         }
 
         remote_branches.delete_if { |i|
-            # puts("     #{i[:branch_name]} == #{entry[:branch_name]}")
             i[:branch_name] == entry[:branch_name]
         }
     end
@@ -83,29 +96,58 @@ def parse_output(output)
 end
 
 
+def print_branch(branch)
+    branch_str = branch[:branch].ljust(40)
+    hash_placeholder = "".ljust(branch[:hash].length)
+    local_hash = hash_placeholder
+    remote_hash = hash_placeholder
+    hash_sep = "   "
+
+    if(branch[:upstream_hash] != nil)
+        local_hash = branch[:hash]
+        remote_hash = branch[:upstream_hash]
+    elsif(branch[:possible_remote] != nil)
+        local_hash = branch[:hash]
+        remote_hash = branch[:possible_remote][:hash]
+        hash_sep = ' ~ '
+    elsif(branch[:branch_name] == branch[:branch])
+        local_hash = branch[:hash]
+    else
+        remote_hash = branch[:hash]
+    end
+
+    hash_indicator = '  '
+    if(local_hash != hash_placeholder and remote_hash != hash_placeholder and local_hash != remote_hash)
+        hash_indicator = '! '
+    end
+
+    remote_str = ""
+    if(branch[:remote] != nil)
+        remote_str = "(#{branch[:remote]})"
+    elsif(branch[:possible_remote] != nil)
+        # remote_str = 'asd;klfjas;dfljkads'
+        remote_str = "(#{branch[:possible_remote][:branch].split('/')[0]})"
+    end
+
+    branch_str = branch_str.ljust(30) +
+        hash_indicator + local_hash + hash_sep + remote_hash +
+        " " + remote_str.ljust(15) +
+        "  #{branch[:creatordate]}"
+
+    puts(branch_str)
+    # pp(branch)
+end
 
 
 def print_branches(branches)
     for branch in branches
-        branch_str = branch[:branch].ljust(40)
-        if(branch[:upstream_hash] != nil)
-            branch_str += " #{branch[:hash]} #{branch[:upstream_hash]}"
-        elsif(branch[:branch_name] == branch[:branch])
-            branch_str += " #{branch[:hash]}"
-        else
-            branch_str += "         #{branch[:hash]}"
-        end
-        puts(branch_str)
-        if(branch[:possible_remote] != nil)
-            pr = branch[:possible_remote]
-            puts("   ?#{pr[:branch]}".ljust(48) + " #{pr[:hash]}")
-        end
+        print_branch(branch)
     end
 end
 
 
 def print_parse_result(parse_result, option)
-    title = "Branch".ljust(40) + " local   remote"
+    title = "Branch".ljust(40) + " local      remote                   date       "
     puts(title)
     puts("".ljust(title.length, '-'))
 
@@ -127,11 +169,13 @@ def print_parse_result(parse_result, option)
         print_branches(parse_result[:local_branches])
         print_branches(parse_result[:remote_branches])
     end
-
 end
 
+
 def main
-    cmd_result = `git branch --format "%(refname:short)->%(upstream)->%(tree:short)" -va`
+    cmd = "git branch --format \"%(refname:short)#{$delimeter}%(upstream)#{$delimeter}%(tree:short)#{$delimeter}%(creatordate)\" -va"
+    cmd_result = `#{cmd}`
+    # puts(cmd_result)
     parse_result = parse_output(cmd_result)
     print_parse_result(parse_result, ARGV[0])
 end
