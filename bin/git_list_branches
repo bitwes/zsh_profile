@@ -171,6 +171,7 @@ def print_parse_result(parse_result, option)
     end
 end
 
+# git branch --format \"%(refname:short)#{$delimeter}%(upstream)#{$delimeter}%(tree:short)#{$delimeter}%(creatordate)\" -va
 
 def main
     cmd = "git branch --format \"%(refname:short)#{$delimeter}%(upstream)#{$delimeter}%(tree:short)#{$delimeter}%(creatordate)\" -va"
